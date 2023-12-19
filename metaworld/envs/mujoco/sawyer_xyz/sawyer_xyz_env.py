@@ -540,7 +540,7 @@ class SawyerXYZEnv(SawyerMocapBase, EzPickle):
         self.init_tcp = self.tcp_center
 
     def _get_state_rand_vec(self):
-        if self._freeze_rand_vec:
+        if self._freeze_rand_vec and self._last_rand_vec is not None:
             assert self._last_rand_vec is not None
             return self._last_rand_vec
         else:
