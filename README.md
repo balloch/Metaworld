@@ -99,7 +99,7 @@ env.set_task(task)  # Set task
 
 obs = env.reset()  # Reset environment
 a = env.action_space.sample()  # Sample an action
-obs, reward, done, info = env.step(a)  # Step the environment with the sampled random action
+obs, reward, terminated, truncated, info = env.step(a)  # Step the environment with the sampled random action
 ```
 __MT1__ can be run the same way except that it does not contain any `test_tasks`
 ### Running a benchmark
@@ -119,9 +119,9 @@ for name, env_cls in ml10.train_classes.items():
   training_envs.append(env)
 
 for env in training_envs:
-  obs = env.reset()  # Reset environment
+  obs, info = env.reset()  # Reset environment
   a = env.action_space.sample()  # Sample an action
-  obs, reward, done, info = env.step(a)  # Step the environment with the sampled random action
+  obs, reward, terminated, truncated, info = env.step(a)  # Step the environment with the sampled random action
 ```
 Create an environment with test tasks (this only works for ML10 and ML45, since MT10 and MT50 don't have a separate set of test tasks):
 ```python
@@ -139,9 +139,9 @@ for name, env_cls in ml10.test_classes.items():
   testing_envs.append(env)
 
 for env in testing_envs:
-  obs = env.reset()  # Reset environment
+  obs, info = env.reset()  # Reset environment
   a = env.action_space.sample()  # Sample an action
-  obs, reward, done, info = env.step(a)  # Step the environment with the sampled random action
+  obs, reward, terminated, truncated, info = env.step(a)  # Step the environment with the sampled random action
 ```
 
 ## Accessing Single Goal Environments
@@ -165,7 +165,7 @@ door_open_goal_hidden_cls = ALL_V2_ENVIRONMENTS_GOAL_HIDDEN["door-open-v2-goal-h
 env = door_open_goal_hidden_cls()
 env.reset()  # Reset environment
 a = env.action_space.sample()  # Sample an action
-obs, reward, done, info = env.step(a)  # Step the environment with the sampled random action
+obs, reward, terminated, truncated, info = env.step(a)  # Step the environment with the sampled random action
 assert (obs[-3:] == np.zeros(3)).all() # goal will be zeroed out because env is HiddenGoal
 
 # You can choose to initialize the random seed of the environment.
